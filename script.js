@@ -98,7 +98,20 @@ function saveRecentCity(city) {
   localStorage.setItem("cities", JSON.stringify(cities.slice(0, 5)));
 }
 
+/* ================= LOCATION ================= */
+grantBtn.onclick = () => {
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const { latitude, longitude } = pos.coords;
 
+      sessionStorage.setItem("locationGranted", "true");
+
+      grantContainer.classList.add("hidden");
+      fetchByCoords(latitude, longitude);
+    },
+    () => showError("Location permission denied")
+  );
+};
 
 function checkPermission() {
   const granted = sessionStorage.getItem("locationGranted");
