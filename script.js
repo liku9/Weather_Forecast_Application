@@ -30,7 +30,76 @@ const toggleBtn = document.querySelector("[data-toggleTemp]");
 let currentTemp = 0;
 let isCelsius = true;
 
+/* ================= TABS ================= */
+function setActive(tab) {
+  userTab.classList.remove("bg-white/90");
+  searchTab.classList.remove("bg-white/90");
+  tab.classList.add("bg-white/90");
+}
 
+userTab.onclick = () => {
+  setActive(userTab);
+  searchForm.classList.add("hidden");
+  errorBox.classList.add("hidden");
+  forecastSection.classList.add("hidden");
+  userInfo.classList.add("hidden");
+  checkPermission();
+};
+
+searchTab.onclick = () => {
+  setActive(searchTab);
+  searchForm.classList.remove("hidden");
+  grantContainer.classList.add("hidden");
+};
+
+
+
+
+function saveRecentCity(city) {
+  let cities = JSON.parse(localStorage.getItem("cities")) || [];
+  cities = cities.filter((c) => c.toLowerCase() !== city.toLowerCase());
+  cities.unshift(city);
+  localStorage.setItem("cities", JSON.stringify(cities.slice(0, 5)));
+}
+
+
+
+function checkPermission() {
+  const granted = sessionStorage.getItem("locationGranted");
+
+  errorBox.classList.add("hidden");
+  userInfo.classList.add("hidden");
+  forecastSection.classList.add("hidden");
+
+  if (granted) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        fetchByCoords(latitude, longitude);
+      },
+      () => {
+        grantContainer.classList.remove("hidden");
+      }
+    );
+  } else {
+    grantContainer.classList.remove("hidden");
+  }
+}
+
+
+
+async function fetchByCoords(lat, lon) {
+  try {
+    const data = await fetchWeather(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+    );
+    updateUI(data);
+    saveRecentCity(data.name);
+    fetchForecast(data.name);
+  } catch {
+    showError("Location weather not found");
+  }
+}
 
 /* ================= UI ================= */
 function updateUI(data) {
