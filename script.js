@@ -194,7 +194,11 @@ function updateUI(data) {
   humidityEl.innerText = `${data.main.humidity}%`;
   tempCard.innerText = `${data.main.temp} °C`;
 
- 
+  /* === IF TEMPERATURE IS ABOVE 40 DEGREES, DISPLAY AN ALEAT ====== */
+  updateBackground(data.weather[0].main);
+  if (data.main.temp >= 40) {
+    showError("Extreme Heat Alert! Temperature above 40°C");
+  }
 }
 
 
