@@ -135,7 +135,34 @@ function checkPermission() {
   }
 }
 
+/* ================= API ================= */
+const API_KEY = "168771779c71f3d64106d8a88376808a";
+async function fetchWeather(url) {
+  loading.classList.remove("hidden");
 
+  const res = await fetch(url);
+  if (!res.ok) {
+    loading.classList.add("hidden");
+    throw new Error("API Error");
+  }
+
+  const data = await res.json();
+  loading.classList.add("hidden");
+  return data;
+}
+
+async function fetchByCity(city) {
+  try {
+    const data = await fetchWeather(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+    );
+    updateUI(data);
+    saveRecentCity(city);
+    fetchForecast(city);
+  } catch {
+    showError("City not found");
+  }
+}
 
 async function fetchByCoords(lat, lon) {
   try {
