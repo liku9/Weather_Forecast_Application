@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Forecast</title>
+    <!-- favicon use  -->
+    <link rel="icon" href="./images/favicon.png" />
+    <!-- google font use  -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CLI linking... -->
+    <link rel="stylesheet" href="./output.css" />
+    <style>
+      body {
+        font-family: "Merriweather Sans", sans-serif;
+      }
+    </style>
+  </head>
+
+  <body
+    class="h-screen overflow-hidden bg-[url('./images/bgpic.jpg')] bg-cover bg-center"
+  >
+    <div class="h-screen flex flex-col items-center px-4 bg-black/20">
+      <h1 class="text-2xl font-bold uppercase tracking-widest mt-3 text-black">
+        Weather Dashboard
+      </h1>
+
+      <!-- Both your weather & search weather tabs here -->
+      <div class="flex gap-6 mt-3 text-sm">
+        <p
+          data-userWeather
+          class="px-4 py-1.5 rounded cursor-pointer bg-white/90"
+        >
+          Your Weather
+        </p>
+        <p
+          data-searchWeather
+          class="px-4 py-1.5 rounded cursor-pointer bg-white/70"
+        >
+          Search Weather
+        </p>
+      </div>
+
+      <!-- Search -->
+      <form data-searchForm class="hidden mt-3 w-full max-w-sm relative">
+        <div class="flex">
+          <input
+            data-searchInput
+            type="text"
+            placeholder="Search city..."
+            class="flex-1 px-3 py-1.5 rounded-l-full outline-none text-sm bg-white"
+          />
+          <button class="bg-blue-600 text-white p-2 rounded-r-full border">
+            <img src="./images/search.png" class="w-4" />
+          </button>
+        </div>
+
+        <div
+          data-recentList
+          class="hidden absolute top-full left-0 w-full rounded shadow-md text-sm mt-1 z-20"
+        ></div>
+      </form>
+
+      <!-- Grant Location on your weather -->
+      <div
+        class="grantLocationContainer hidden flex-col items-center mt-5 text-white"
+      >
+        <img src="./images/location.png" class="w-12 mb-2" />
+        <p class="font-semibold">Grant Location Access</p>
+        <button
+          data-grantAccess
+          class="bg-blue-600 text-white px-4 py-1 rounded text-sm mt-2"
+        >
+          Grant Access
+        </button>
+      </div>
+
+      <!-- Loading -->
+      <div
+        class="loadingContainer hidden mt-5 text-white flex-col items-center"
+      >
+        <img src="./images/loading.gif" class="w-20" />
+        <p class="text-sm">Loading...</p>
+      </div>
+
+      <!-- Error -->
+      <div
+        class="errorContainer hidden mt-4 bg-red-500/90 text-white px-4 py-2 rounded flex-col items-center"
+      >
+        <img src="./images/not-found.png" class="w-24 mb-1" />
+        <p data-errorText class="text-sm"></p>
+      </div>
+
+      <!-- Current Weather -->
+      <div
+        class="userInfoContainer hidden mt-4 flex-col items-center gap-1 text-white"
+      >
+        <div class="flex items-center justify-evenly">
+          <p data-cityName class="text-lg font-semibold"></p>
+          <p data-weatherDesc class="capitalize text-sm"></p>
+          <img data-weatherIcon class="w-14" />
+        </div>
+
+        <!-- TEMPERATURE & TOGGLE BUTTON  -->
+        <div class="flex justify-center gap-2 px-4 py-2 rounded-lg">
+          <p data-temp class="text-2xl font-bold"></p>
+          <button
+            data-toggleTemp
+            class="bg-black/70 text-white text-xs px-2 py-1 rounded"
+          >
+            °F
+          </button>
+        </div>
+
+        <div class="flex gap-3 mt-3 text-xs">
+          <div class="bg-white/80 p-2 rounded text-black text-center w-24">
+            <img src="./images/temp.png" class="w-6 mx-auto" />
+            <p data-tempCard class="font-semibold"></p>
+          </div>
+
+          <div class="bg-white/80 p-2 rounded text-black text-center w-24">
+            <img src="./images/wind.png" class="w-6 mx-auto" />
+            <p data-windspeed></p>
+          </div>
+          <div class="bg-white/80 p-2 rounded text-black text-center w-24">
+            <img src="./images/humidity.png" class="w-6 mx-auto" />
+            <p data-humidity></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forecast -->
+      <div class="forecastContainer hidden mt-4 w-full max-w-5xl text-black">
+        <h2 class="text-sm text-center font-semibold mb-2">5 Day Forecast</h2>
+        <div data-forecastContainer class="grid grid-cols-5 gap-3"></div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
