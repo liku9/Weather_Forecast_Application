@@ -201,7 +201,19 @@ function updateUI(data) {
   }
 }
 
+/* ================= TEMPERATURE TOGGLE °C/°F ================= */
+toggleBtn.onclick = () => {
+  isCelsius = !isCelsius;
+  updateTemp();
+};
 
+function updateTemp() {
+  tempEl.innerText = isCelsius
+    ? `${currentTemp} °C`
+    : `${((currentTemp * 9) / 5 + 32).toFixed(1)} °F`;
+
+  toggleBtn.innerText = isCelsius ? "°F" : "°C";
+}
 
 /* ================= FORECAST ================= */
 async function fetchForecast(city) {
