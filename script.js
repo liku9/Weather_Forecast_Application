@@ -55,6 +55,7 @@ searchTab.onclick = () => {
 
 
 
+
 function saveRecentCity(city) {
   let cities = JSON.parse(localStorage.getItem("cities")) || [];
   cities = cities.filter((c) => c.toLowerCase() !== city.toLowerCase());
