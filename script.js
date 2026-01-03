@@ -285,7 +285,11 @@ function updateBackground(main) {
   body.style.backgroundImage = `url('./images/${map[main] || "sunny.jpg"}')`;
 }
 
-
+/* ================= ERROR ================= */
+function showError(msg) {
+  errorText.innerText = msg;
+  errorBox.classList.remove("hidden");
+}
 
 setActive(userTab);
 checkPermission();
