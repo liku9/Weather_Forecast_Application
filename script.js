@@ -274,7 +274,16 @@ function getNextForecasts(list) {
   return Object.values(days).slice(0, 6);
 }
 
-
+/* ================= BACKGROUND CHANGES ON THE BASIS OF WEATHER LOCATION ================= */
+function updateBackground(main) {
+  const map = {
+    Rain: "rainy.png",
+    Clouds: "cloudy.jpg",
+    Clear: "sunny.jpg",
+    Snow: "snow.png",
+  };
+  body.style.backgroundImage = `url('./images/${map[main] || "sunny.jpg"}')`;
+}
 
 
 
